@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BP Manager - Gestión de Brand Partners</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <style>
         * {
             margin: 0;
@@ -111,7 +108,6 @@
             border: none;
             cursor: pointer;
             transition: all 0.2s;
-            position: relative;
         }
 
         .login-btn-primary {
@@ -163,7 +159,6 @@
             height: 100vh;
         }
 
-        /* ── Sidebar ── */
         .sidebar {
             width: 200px;
             background-color: #0a0d14;
@@ -252,7 +247,6 @@
             word-break: break-all;
         }
 
-        /* ── Main Content ── */
         .main-content {
             margin-left: 200px;
             flex: 1;
@@ -261,7 +255,6 @@
             padding: 24px;
         }
 
-        /* ── Page Header ── */
         .page-header {
             margin-bottom: 32px;
             display: flex;
@@ -343,7 +336,6 @@
             font-size: 12px;
         }
 
-        /* ── Cards & Forms ── */
         .card {
             background-color: #161a24;
             border: 1px solid #252b3d;
@@ -394,20 +386,11 @@
             margin-bottom: 16px;
         }
 
-        .form-row.full {
-            grid-template-columns: 1fr;
-        }
-
         .months-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 12px;
             margin-top: 12px;
-        }
-
-        .months-grid input {
-            padding: 8px;
-            font-size: 13px;
         }
 
         .months-header {
@@ -442,7 +425,6 @@
             background-color: #252b3d;
         }
 
-        /* ── Tables ── */
         .table-wrapper {
             overflow-x: auto;
         }
@@ -480,17 +462,6 @@
             background-color: #1e2333;
         }
 
-        tbody tr.sub-row {
-            background-color: #0a0d14;
-            font-size: 13px;
-        }
-
-        tbody tr.sub-row td {
-            padding: 10px 16px;
-            color: #a8b1c7;
-        }
-
-        /* ── Badges ── */
         .badge {
             display: inline-block;
             padding: 4px 11px;
@@ -500,13 +471,6 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-right: 6px;
-            margin-bottom: 4px;
-        }
-
-        .badge-blue {
-            background-color: #1e2333;
-            color: #5b95ff;
-            border: 1px solid #5b95ff;
         }
 
         .badge-green {
@@ -515,19 +479,12 @@
             border: 1px solid #4ade80;
         }
 
-        .badge-amber {
-            background-color: rgba(251, 191, 36, 0.1);
-            color: #fbbf24;
-            border: 1px solid #fbbf24;
+        .badge-blue {
+            background-color: #1e2333;
+            color: #5b95ff;
+            border: 1px solid #5b95ff;
         }
 
-        .badge-red {
-            background-color: rgba(255, 107, 107, 0.1);
-            color: #ff6b6b;
-            border: 1px solid #ff6b6b;
-        }
-
-        /* ── Modal / Floating Panel ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -554,7 +511,6 @@
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
         }
 
         .modal-header {
@@ -572,11 +528,6 @@
             color: #a8b1c7;
             font-size: 24px;
             cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .modal-close:hover {
-            color: #ffffff;
         }
 
         .modal-footer {
@@ -586,7 +537,6 @@
             justify-content: flex-end;
         }
 
-        /* ── Dashboard ── */
         .tabs {
             display: flex;
             gap: 12px;
@@ -602,7 +552,6 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
             border-bottom: 2px solid transparent;
             margin-bottom: -1px;
         }
@@ -648,69 +597,8 @@
             font-weight: 600;
             font-family: 'Courier New', monospace;
             color: #ffffff;
-            margin-bottom: 4px;
         }
 
-        .kpi-detail {
-            font-size: 12px;
-            color: #a8b1c7;
-        }
-
-        .grid-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .detail-card {
-            background-color: #161a24;
-            border: 1px solid #252b3d;
-            border-radius: 16px;
-            padding: 16px;
-        }
-
-        .detail-card-month {
-            font-size: 12px;
-            font-weight: 700;
-            color: #5b95ff;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-
-        .detail-card-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 13px;
-        }
-
-        .detail-card-label {
-            color: #a8b1c7;
-        }
-
-        .detail-card-value {
-            color: #ffffff;
-            font-weight: 600;
-            font-family: 'Courier New', monospace;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background-color: #252b3d;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 12px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background-color: #4ade80;
-            border-radius: 10px;
-        }
-
-        /* ── Toast ── */
         .toast {
             position: fixed;
             bottom: 24px;
@@ -746,7 +634,6 @@
             color: #ff6b6b;
         }
 
-        /* ── Utilities ── */
         .hidden {
             display: none !important;
         }
@@ -765,33 +652,13 @@
             color: #a8b1c7;
         }
 
-        .mt-16 {
-            margin-top: 16px;
-        }
-
-        .gap-12 {
-            gap: 12px;
-        }
-
-        .select-wrapper {
-            position: relative;
-        }
-
         select {
             appearance: none;
-            padding-right: 24px;
+            padding-right: 28px;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b95ff' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 8px center;
             background-size: 16px;
-            padding-right: 28px;
-        }
-
-        .month-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 12px;
         }
 
         .checkbox-group {
@@ -819,42 +686,11 @@
             font-weight: 400;
             font-size: 14px;
             cursor: pointer;
-            text-transform: none;
-            letter-spacing: normal;
-        }
-
-        .cost-negative {
-            color: #ff6b6b;
-        }
-
-        .cost-positive {
-            color: #4ade80;
-        }
-
-        .inline-edit {
-            background-color: #1e2333;
-            border: 1px solid #5b95ff;
-            border-radius: 6px;
-            padding: 6px 8px;
-            color: #ffffff;
-            font-size: 13px;
-            font-family: 'Courier New', monospace;
-            width: 100%;
         }
 
         .action-buttons {
             display: flex;
             gap: 8px;
-        }
-
-        .margin-percentage {
-            font-size: 24px;
-            font-weight: 700;
-            color: #4ade80;
-        }
-
-        .margin-percentage.negative {
-            color: #ff6b6b;
         }
     </style>
 </head>
@@ -889,7 +725,6 @@
     <!-- ── App Container ── -->
     <div id="appContainer" class="hidden">
         <div class="container">
-            <!-- ── Sidebar ── -->
             <aside class="sidebar">
                 <div class="sidebar-top">
                     <div class="sidebar-logo">BP Manager</div>
@@ -906,10 +741,7 @@
                 </div>
             </aside>
 
-            <!-- ── Main Content ── -->
             <main class="main-content">
-
-                <!-- ── Dashboard Page ── -->
                 <div id="dashboard" class="page">
                     <div class="page-header">
                         <div class="page-title-group">
@@ -917,12 +749,10 @@
                             <p class="page-subtitle">Análisis de utilización y rentabilidad</p>
                         </div>
                     </div>
-
                     <div class="tabs">
                         <button class="tab-btn active" data-tab="dash-bp">Por Brand Partner</button>
                         <button class="tab-btn" data-tab="dash-proy">Por Proyecto</button>
                     </div>
-
                     <div id="dash-bp" class="tab-content active">
                         <div class="card">
                             <div class="form-group">
@@ -934,7 +764,6 @@
                         </div>
                         <div id="dashBpContent"></div>
                     </div>
-
                     <div id="dash-proy" class="tab-content">
                         <div class="card">
                             <div class="form-group">
@@ -948,37 +777,25 @@
                     </div>
                 </div>
 
-                <!-- ── Brand Partners Page ── -->
                 <div id="bps" class="page hidden">
                     <div class="page-header">
-                        <div class="page-title-group">
-                            <h1 class="page-title">Brand Partners</h1>
-                            <p class="page-subtitle">Administración de recursos contratados</p>
-                        </div>
+                        <h1 class="page-title">Brand Partners</h1>
                         <button class="btn-primary" id="btnAddBp">+ Nuevo BP</button>
                     </div>
                     <div id="bpsTableContainer" class="table-wrapper"></div>
                 </div>
 
-                <!-- ── Proyectos Page ── -->
                 <div id="proyectos" class="page hidden">
                     <div class="page-header">
-                        <div class="page-title-group">
-                            <h1 class="page-title">Proyectos</h1>
-                            <p class="page-subtitle">Gestión de proyectos y cotizaciones</p>
-                        </div>
+                        <h1 class="page-title">Proyectos</h1>
                         <button class="btn-primary" id="btnAddProy">+ Nuevo Proyecto</button>
                     </div>
                     <div id="proyectosTableContainer" class="table-wrapper"></div>
                 </div>
 
-                <!-- ── Asignaciones Page ── -->
                 <div id="asignaciones" class="page hidden">
                     <div class="page-header">
-                        <div class="page-title-group">
-                            <h1 class="page-title">Asignaciones</h1>
-                            <p class="page-subtitle">Matriz de horas asignadas por mes</p>
-                        </div>
+                        <h1 class="page-title">Asignaciones</h1>
                         <button class="btn-primary" id="btnAddAsig">+ Agregar Asignación</button>
                     </div>
                     <div id="asignacionesContainer"></div>
@@ -987,167 +804,46 @@
         </div>
     </div>
 
-    <!-- ── Modal para editar BP ── -->
-    <div id="editBpModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <span id="editBpTitle">Nuevo Brand Partner</span>
-                <button class="modal-close" data-close="editBpModal">&times;</button>
-            </div>
-            <form id="editBpForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" id="editBpName" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Seniority</label>
-                        <select id="editBpSeniority">
-                            <option value="Junior">Junior</option>
-                            <option value="Mid">Mid</option>
-                            <option value="Senior">Senior</option>
-                            <option value="Lead">Lead</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Estado</label>
-                    <select id="editBpEstado">
-                        <option value="true">Activo</option>
-                        <option value="false">Inactivo</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Horas Contratadas por Mes</label>
-                    <button type="button" class="btn-propagate" id="btnPropagateBpHoras">Propagar base</button>
-                    <div class="months-header">
-                        <span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span><span>Jun</span>
-                    </div>
-                    <div class="months-grid" id="bpHorasGrid"></div>
-                    <div class="months-header">
-                        <span>Jul</span><span>Ago</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dic</span>
-                    </div>
-                    <div class="months-grid" id="bpHorasGrid2"></div>
-                </div>
-                <div class="form-group">
-                    <label>Sueldo por Mes ($)</label>
-                    <button type="button" class="btn-propagate" id="btnPropagateBpSueldo">Propagar base</button>
-                    <div class="months-header">
-                        <span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span><span>Jun</span>
-                    </div>
-                    <div class="months-grid" id="bpSueldoGrid"></div>
-                    <div class="months-header">
-                        <span>Jul</span><span>Ago</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dic</span>
-                    </div>
-                    <div class="months-grid" id="bpSueldoGrid2"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" data-close="editBpModal">Cancelar</button>
-                    <button type="submit" class="btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ── Modal para editar Proyecto ── -->
-    <div id="editProyModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <span id="editProyTitle">Nuevo Proyecto</span>
-                <button class="modal-close" data-close="editProyModal">&times;</button>
-            </div>
-            <form id="editProyForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" id="editProyName" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Categoría</label>
-                        <div style="display: flex; gap: 8px;">
-                            <select id="editProyTipo" style="flex: 1;">
-                                <option value="">Seleccionar categoría...</option>
-                            </select>
-                            <button type="button" class="btn-secondary btn-sm" id="btnNewCategoria">+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Estado</label>
-                    <select id="editProyEstado">
-                        <option value="Activo">Activo</option>
-                        <option value="Pausado">Pausado</option>
-                        <option value="Cerrado">Cerrado</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Cotización por Mes ($)</label>
-                    <button type="button" class="btn-propagate" id="btnPropagateProyValor">Propagar base</button>
-                    <div class="months-header">
-                        <span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span><span>Jun</span>
-                    </div>
-                    <div class="months-grid" id="proyValorGrid"></div>
-                    <div class="months-header">
-                        <span>Jul</span><span>Ago</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dic</span>
-                    </div>
-                    <div class="months-grid" id="proyValorGrid2"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" data-close="editProyModal">Cancelar</button>
-                    <button type="submit" class="btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ── Modal para agregar Asignación ── -->
-    <div id="editAsigModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <span>Agregar Asignación</span>
-                <button class="modal-close" data-close="editAsigModal">&times;</button>
-            </div>
-            <form id="editAsigForm">
-                <div class="form-group">
-                    <label>Proyecto</label>
-                    <select id="editAsigProy" required>
-                        <option value="">Seleccionar proyecto...</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Brand Partners</label>
-                    <div class="checkbox-group" id="editAsigBpsCheckboxes"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" data-close="editAsigModal">Cancelar</button>
-                    <button type="submit" class="btn-primary">Agregar</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- Scripts de Firebase vía CDN -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // ── Firebase Config ──
-        const firebaseConfig = {
-            apiKey: "AIzaSyD-eTmakSEBHshIDLN-ZM1A6OJ9i_ftSYs",
-            authDomain: "bp-manager-9f54a.firebaseapp.com",
-            projectId: "bp-manager-9f54a",
-            storageBucket: "bp-manager-9f54a.firebasestorage.app",
-            messagingSenderId: "1018666038747",
-            appId: "1:1018666038747:web:6f3a01be8c34b4ae9ce3fe"
-        };
+        // Esperar a que Firebase esté disponible
+        function initFirebase() {
+            if (typeof firebase === 'undefined') {
+                console.error('Firebase SDK no cargó. Reintentando...');
+                setTimeout(initFirebase, 500);
+                return;
+            }
 
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+            const firebaseConfig = {
+                apiKey: "AIzaSyD-eTmakSEBHshIDLN-ZM1A6OJ9i_ftSYs",
+                authDomain: "bp-manager-9f54a.firebaseapp.com",
+                projectId: "bp-manager-9f54a",
+                storageBucket: "bp-manager-9f54a.firebasestorage.app",
+                messagingSenderId: "1018666038747",
+                appId: "1:1018666038747:web:6f3a01be8c34b4ae9ce3fe"
+            };
 
+            try {
+                firebase.initializeApp(firebaseConfig);
+                console.log('Firebase inicializado correctamente');
+                window.auth = firebase.auth();
+                window.db = firebase.firestore();
+                initApp();
+            } catch (error) {
+                console.error('Error inicializando Firebase:', error);
+            }
+        }
+
+        // Datos y lógica
         const YEAR = '2026';
         const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         const MONTH_SHORT = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
         let state = {};
-        let currentEditBpId = null;
-        let currentEditProyId = null;
         let currentUser = null;
         let unsubscribers = [];
 
@@ -1167,172 +863,102 @@
             nextProyId: 3
         };
 
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
         function mapFirebaseError(code) {
             const errors = {
                 'auth/invalid-email': 'Email inválido',
-                'auth/user-disabled': 'Usuario deshabilitado',
                 'auth/user-not-found': 'Usuario no existe',
                 'auth/wrong-password': 'Contraseña incorrecta',
                 'auth/email-already-in-use': 'Email ya registrado',
                 'auth/weak-password': 'Contraseña debe tener al menos 6 caracteres',
-                'auth/operation-not-allowed': 'Operación no permitida',
                 'auth/too-many-requests': 'Demasiados intentos, intenta más tarde'
             };
             return errors[code] || 'Error: ' + code;
         }
 
         async function signUp(email, password) {
-            const userCred = await auth.createUserWithEmailAndPassword(email, password);
+            const userCred = await window.auth.createUserWithEmailAndPassword(email, password);
             await initializeUserData(userCred.user.uid);
+            showToast('Cuenta creada exitosamente', 'success');
         }
 
         async function signIn(email, password) {
-            await auth.signInWithEmailAndPassword(email, password);
+            await window.auth.signInWithEmailAndPassword(email, password);
+            showToast('Sesión iniciada', 'success');
         }
 
         async function logout() {
             unsubscribers.forEach(unsub => unsub());
             unsubscribers = [];
             state = {};
-            await auth.signOut();
+            await window.auth.signOut();
             showLoginPage();
         }
 
         async function initializeUserData(uid) {
-            const configRef = db.collection('users').doc(uid).collection('config').doc('main');
+            const configRef = window.db.collection('users').doc(uid).collection('config').doc('main');
             const configSnap = await configRef.get();
             if (!configSnap.exists) {
                 await configRef.set({ categorias: DEFAULT_STATE.categorias, nextBpId: DEFAULT_STATE.nextBpId, nextProyId: DEFAULT_STATE.nextProyId });
                 for (const bp of DEFAULT_STATE.bps) {
-                    await db.collection('users').doc(uid).collection('bps').doc(bp.id).set(bp);
+                    await window.db.collection('users').doc(uid).collection('bps').doc(bp.id).set(bp);
                 }
                 for (const proy of DEFAULT_STATE.proyectos) {
-                    await db.collection('users').doc(uid).collection('proyectos').doc(proy.id).set(proy);
+                    await window.db.collection('users').doc(uid).collection('proyectos').doc(proy.id).set(proy);
                 }
                 for (const [proyId, bps] of Object.entries(DEFAULT_STATE.asignaciones[YEAR])) {
                     for (const [bpId, horas] of Object.entries(bps)) {
                         const key = `${proyId}_${bpId}_${YEAR}`;
-                        await db.collection('users').doc(uid).collection('asignaciones').doc(key).set({ proyId, bpId, year: YEAR, horas });
+                        await window.db.collection('users').doc(uid).collection('asignaciones').doc(key).set({ proyId, bpId, year: YEAR, horas });
                     }
                 }
             }
         }
 
-        async function saveBP(bp) {
-            if (!currentUser) return;
-            await db.collection('users').doc(currentUser.uid).collection('bps').doc(bp.id).set(bp);
+        function showLoginPage() {
+            document.getElementById('appContainer').classList.add('hidden');
+            document.getElementById('loginContainer').classList.remove('hidden');
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginError').textContent = '';
         }
 
-        async function deleteBP(bpId) {
-            if (!currentUser) return;
-            await db.collection('users').doc(currentUser.uid).collection('bps').doc(bpId).delete();
+        function showAppPage() {
+            document.getElementById('loginContainer').classList.add('hidden');
+            document.getElementById('appContainer').classList.remove('hidden');
+            document.getElementById('logoutEmail').textContent = currentUser.email;
+            navigate('dashboard');
         }
 
-        async function saveProyecto(proy) {
-            if (!currentUser) return;
-            await db.collection('users').doc(currentUser.uid).collection('proyectos').doc(proy.id).set(proy);
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
         }
 
-        async function deleteProyecto(proyId) {
-            if (!currentUser) return;
-            await db.collection('users').doc(currentUser.uid).collection('proyectos').doc(proyId).delete();
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
         }
-
-        async function saveAsignacion(proyId, bpId, horas) {
-            if (!currentUser) return;
-            const key = `${proyId}_${bpId}_${YEAR}`;
-            await db.collection('users').doc(currentUser.uid).collection('asignaciones').doc(key).set({ proyId, bpId, year: YEAR, horas });
-        }
-
-        async function deleteAsignacion(proyId, bpId) {
-            if (!currentUser) return;
-            const key = `${proyId}_${bpId}_${YEAR}`;
-            await db.collection('users').doc(currentUser.uid).collection('asignaciones').doc(key).delete();
-        }
-
-        async function saveConfig() {
-            if (!currentUser) return;
-            await db.collection('users').doc(currentUser.uid).collection('config').doc('main').set({
-                categorias: state.categorias,
-                nextBpId: state.nextBpId,
-                nextProyId: state.nextProyId
-            });
-        }
-
-        function subscribeToUserData(uid) {
-            const unsub1 = db.collection('users').doc(uid).collection('bps').onSnapshot(snap => {
-                state.bps = [];
-                snap.forEach(doc => state.bps.push(doc.data()));
-                if (!document.getElementById('bps').classList.contains('hidden')) renderBPs();
-            });
-            unsubscribers.push(unsub1);
-
-            const unsub2 = db.collection('users').doc(uid).collection('proyectos').onSnapshot(snap => {
-                state.proyectos = [];
-                snap.forEach(doc => state.proyectos.push(doc.data()));
-                if (!document.getElementById('proyectos').classList.contains('hidden')) renderProyectos();
-            });
-            unsubscribers.push(unsub2);
-
-            const unsub3 = db.collection('users').doc(uid).collection('asignaciones').onSnapshot(snap => {
-                if (!state.asignaciones) state.asignaciones = {};
-                if (!state.asignaciones[YEAR]) state.asignaciones[YEAR] = {};
-                snap.forEach(doc => {
-                    const data = doc.data();
-                    if (!state.asignaciones[YEAR][data.proyId]) state.asignaciones[YEAR][data.proyId] = {};
-                    state.asignaciones[YEAR][data.proyId][data.bpId] = data.horas;
-                });
-                if (!document.getElementById('asignaciones').classList.contains('hidden')) renderAsignaciones();
-            });
-            unsubscribers.push(unsub3);
-
-            const unsub4 = db.collection('users').doc(uid).collection('config').doc('main').onSnapshot(doc => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    state.categorias = data.categorias || [];
-                    state.nextBpId = data.nextBpId || 1;
-                    state.nextProyId = data.nextProyId || 1;
-                }
-            });
-            unsubscribers.push(unsub4);
-        }
-
-        // ── Data Helpers ──
-        function valorMes(proy, mesIdx) { return proy.valores[mesIdx] || 0; }
-        function valorAnio(proy) { return proy.valores.reduce((sum, val) => sum + val, 0); }
-        function sueldoMes(bp, mesIdx) { return bp.sueldos[mesIdx] || 0; }
-        function horasMes(bp, mesIdx) { return bp.horas[mesIdx] || 0; }
-        function valorHora(bp, mesIdx) { const horas = horasMes(bp, mesIdx); if (horas === 0) return 0; return sueldoMes(bp, mesIdx) / horas; }
-        function hsAsignadasBP(bpId, mesIdx) { let total = 0; const asig = state.asignaciones && state.asignaciones[YEAR]; if (!asig) return 0; for (const proy of Object.values(asig)) { if (proy[bpId]) { total += proy[bpId][mesIdx] || 0; } } return total; }
-        function hsOciosasBP(bpId, mesIdx) { const bp = state.bps.find(b => b.id === bpId); if (!bp) return 0; const contratadas = horasMes(bp, mesIdx); const asignadas = hsAsignadasBP(bpId, mesIdx); return Math.max(0, contratadas - asignadas); }
-        function costoBPAnuoProy(bpId, proyId) { let total = 0; const asig = state.asignaciones && state.asignaciones[YEAR]; if (!asig || !asig[proyId] || !asig[proyId][bpId]) return 0; const bp = state.bps.find(b => b.id === bpId); if (!bp) return 0; for (let m = 0; m < 12; m++) { const hs = asig[proyId][bpId][m] || 0; const vh = valorHora(bp, m); total += hs * vh; } return total; }
-        function lcBPMes(bpId, mesIdx) { const bp = state.bps.find(b => b.id === bpId); if (!bp) return 0; const hsOciosas = hsOciosasBP(bpId, mesIdx); const vh = valorHora(bp, mesIdx); return hsOciosas * vh; }
-        function sueldoAnuoBP(bpId) { const bp = state.bps.find(b => b.id === bpId); if (!bp) return 0; return bp.sueldos.reduce((sum, s) => sum + s, 0); }
-        function utilizacionAnuoBP(bpId) { const bp = state.bps.find(b => b.id === bpId); if (!bp) return 0; let asignadas = 0; let contratadas = 0; for (let m = 0; m < 12; m++) { asignadas += hsAsignadasBP(bpId, m); contratadas += horasMes(bp, m); } if (contratadas === 0) return 0; return (asignadas / contratadas) * 100; }
-        function hsOciosaAnuoBP(bpId) { let total = 0; for (let m = 0; m < 12; m++) { total += hsOciosasBP(bpId, m); } return total; }
-        function costOciosaAnuoBP(bpId) { let total = 0; for (let m = 0; m < 12; m++) { total += lcBPMes(bpId, m); } return total; }
-        function costoBPAnuo(bpId) { let total = 0; const asig = state.asignaciones && state.asignaciones[YEAR]; if (!asig) return 0; for (const proy of Object.keys(asig)) { total += costoBPAnuoProy(bpId, proy); } return total; }
-        function getCategorias() { if (!state.categorias) { state.categorias = ['Always On', 'One Shot', 'Producción', 'Consultoría', 'Soporte']; } return state.categorias; }
-        function tipoClass(tipo) { const tipo_lower = tipo.toLowerCase(); if (tipo_lower.includes('always')) return 'badge-blue'; if (tipo_lower.includes('one shot')) return 'badge-green'; if (tipo_lower.includes('producción')) return 'badge-amber'; if (tipo_lower.includes('consultoría')) return 'badge-red'; return 'badge-blue'; }
-        function formatCurrency(value) { return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 }).format(value); }
-        function formatNumber(value) { return new Intl.NumberFormat('es-AR').format(Math.round(value)); }
-        function showToast(message, type = 'success') { const toast = document.createElement('div'); toast.className = `toast ${type}`; toast.textContent = message; document.body.appendChild(toast); setTimeout(() => toast.remove(), 3000); }
 
         function navigate(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.getElementById(page).classList.remove('hidden');
             document.querySelectorAll('.nav-link').forEach(link => {
-                if (link.dataset.page === page) { link.classList.add('active'); } else { link.classList.remove('active'); }
+                if (link.dataset.page === page) link.classList.add('active');
+                else link.classList.remove('active');
             });
-            if (page === 'dashboard') { renderDashboard(); } else if (page === 'bps') { renderBPs(); } else if (page === 'proyectos') { renderProyectos(); } else if (page === 'asignaciones') { renderAsignaciones(); }
         }
 
-        function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
-        function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
-        function showLoginPage() { document.getElementById('appContainer').classList.add('hidden'); document.getElementById('loginContainer').classList.remove('hidden'); }
-        function showAppPage() { document.getElementById('loginContainer').classList.add('hidden'); document.getElementById('appContainer').classList.remove('hidden'); document.getElementById('logoutEmail').textContent = currentUser.email; navigate('dashboard'); }
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 }).format(value);
+        }
 
-        // ── Login Form ──
+        // ── Login Handlers ──
         document.getElementById('loginBtnSignIn').addEventListener('click', async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
@@ -1340,7 +966,10 @@
             const errorDiv = document.getElementById('loginError');
             const spinner = '<span class="login-spinner"></span>';
 
-            if (!email || !password) { errorDiv.textContent = 'Completa email y contraseña'; return; }
+            if (!email || !password) {
+                errorDiv.textContent = 'Completa email y contraseña';
+                return;
+            }
 
             document.getElementById('loginBtnSignIn').disabled = true;
             document.getElementById('loginBtnSignUp').disabled = true;
@@ -1349,7 +978,6 @@
             try {
                 await signIn(email, password);
                 errorDiv.textContent = '';
-                showToast('Sesión iniciada', 'success');
             } catch (error) {
                 errorDiv.textContent = mapFirebaseError(error.code);
                 document.getElementById('loginSignInText').textContent = 'Sign In';
@@ -1365,8 +993,15 @@
             const errorDiv = document.getElementById('loginError');
             const spinner = '<span class="login-spinner"></span>';
 
-            if (!email || !password) { errorDiv.textContent = 'Completa email y contraseña'; return; }
-            if (password.length < 6) { errorDiv.textContent = 'Contraseña debe tener al menos 6 caracteres'; return; }
+            if (!email || !password) {
+                errorDiv.textContent = 'Completa email y contraseña';
+                return;
+            }
+
+            if (password.length < 6) {
+                errorDiv.textContent = 'Contraseña debe tener al menos 6 caracteres';
+                return;
+            }
 
             document.getElementById('loginBtnSignIn').disabled = true;
             document.getElementById('loginBtnSignUp').disabled = true;
@@ -1375,7 +1010,6 @@
             try {
                 await signUp(email, password);
                 errorDiv.textContent = '';
-                showToast('Cuenta creada exitosamente', 'success');
             } catch (error) {
                 errorDiv.textContent = mapFirebaseError(error.code);
                 document.getElementById('loginSignUpText').textContent = 'Create Account';
@@ -1385,392 +1019,46 @@
         });
 
         document.getElementById('logoutBtn').addEventListener('click', async () => {
-            if (confirm('¿Confirmar logout?')) { await logout(); }
-        });
-
-        // ── BPs Section ──
-        function renderBPs() {
-            const container = document.getElementById('bpsTableContainer');
-            if (!state.bps || state.bps.length === 0) { container.innerHTML = '<p class="text-center text-muted">No hay Brand Partners. Crea uno para comenzar.</p>'; return; }
-            let html = '<table><thead><tr><th>ID</th><th>Nombre</th><th>Seniority</th>'; for (let i = 0; i < 12; i++) { html += `<th>${MONTH_SHORT[i]}</th>`; } html += '<th>Estado</th><th>Acciones</th></tr></thead><tbody>';
-            for (const bp of state.bps) {
-                html += `<tr><td>${bp.id}</td><td>${bp.nombre}</td><td>${bp.seniority}</td>`;
-                for (let i = 0; i < 12; i++) { html += `<td>${bp.horas[i] || 0}</td>`; }
-                html += `<td><span class="badge ${bp.activo ? 'badge-green' : 'badge-red'}">${bp.activo ? 'Activo' : 'Inactivo'}</span></td><td class="action-buttons"><button class="btn-secondary btn-sm" onclick="editBP('${bp.id}')">Editar</button><button class="btn-danger btn-sm" onclick="confirmDeleteBP('${bp.id}')">Eliminar</button></td></tr>`;
-                html += `<tr class="sub-row"><td colspan="3">Sueldos ($)</td>`;
-                for (let i = 0; i < 12; i++) { html += `<td class="text-mono">${formatCurrency(bp.sueldos[i] || 0)}</td>`; }
-                html += '<td colspan="2"></td></tr>';
-            }
-            html += '</tbody></table>';
-            container.innerHTML = html;
-        }
-
-        function editBP(id) {
-            currentEditBpId = id;
-            const bp = state.bps.find(b => b.id === id);
-            if (!bp) return;
-            document.getElementById('editBpTitle').textContent = `Editar: ${bp.nombre}`;
-            document.getElementById('editBpName').value = bp.nombre;
-            document.getElementById('editBpSeniority').value = bp.seniority;
-            document.getElementById('editBpEstado').value = bp.activo ? 'true' : 'false';
-            const hGrid1 = document.getElementById('bpHorasGrid');
-            const hGrid2 = document.getElementById('bpHorasGrid2');
-            hGrid1.innerHTML = ''; hGrid2.innerHTML = '';
-            for (let i = 0; i < 6; i++) { hGrid1.innerHTML += `<input type="number" class="bpHorasInput" data-idx="${i}" value="${bp.horas[i] || 160}" min="0">`; }
-            for (let i = 6; i < 12; i++) { hGrid2.innerHTML += `<input type="number" class="bpHorasInput" data-idx="${i}" value="${bp.horas[i] || 160}" min="0">`; }
-            const sGrid1 = document.getElementById('bpSueldoGrid');
-            const sGrid2 = document.getElementById('bpSueldoGrid2');
-            sGrid1.innerHTML = ''; sGrid2.innerHTML = '';
-            for (let i = 0; i < 6; i++) { sGrid1.innerHTML += `<input type="number" class="bpSueldoInput" data-idx="${i}" value="${bp.sueldos[i] || 200000}" min="0">`; }
-            for (let i = 6; i < 12; i++) { sGrid2.innerHTML += `<input type="number" class="bpSueldoInput" data-idx="${i}" value="${bp.sueldos[i] || 200000}" min="0">`; }
-            openModal('editBpModal');
-        }
-
-        function saveBPForm() {
-            currentEditBpId = null;
-            document.getElementById('editBpTitle').textContent = 'Nuevo Brand Partner';
-            document.getElementById('editBpForm').reset();
-            const hGrid1 = document.getElementById('bpHorasGrid'), hGrid2 = document.getElementById('bpHorasGrid2');
-            hGrid1.innerHTML = ''; hGrid2.innerHTML = '';
-            for (let i = 0; i < 6; i++) { hGrid1.innerHTML += `<input type="number" class="bpHorasInput" data-idx="${i}" value="160" min="0">`; }
-            for (let i = 6; i < 12; i++) { hGrid2.innerHTML += `<input type="number" class="bpHorasInput" data-idx="${i}" value="160" min="0">`; }
-            const sGrid1 = document.getElementById('bpSueldoGrid'), sGrid2 = document.getElementById('bpSueldoGrid2');
-            sGrid1.innerHTML = ''; sGrid2.innerHTML = '';
-            for (let i = 0; i < 6; i++) { sGrid1.innerHTML += `<input type="number" class="bpSueldoInput" data-idx="${i}" value="200000" min="0">`; }
-            for (let i = 6; i < 12; i++) { sGrid2.innerHTML += `<input type="number" class="bpSueldoInput" data-idx="${i}" value="200000" min="0">`; }
-            openModal('editBpModal');
-        }
-
-        function confirmDeleteBP(id) {
-            if (confirm('¿Eliminar este Brand Partner?')) { deleteBP(id); showToast('Brand Partner eliminado', 'success'); }
-        }
-
-        document.getElementById('editBpForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const nombre = document.getElementById('editBpName').value.trim();
-            if (!nombre) { showToast('El nombre es requerido', 'error'); return; }
-            const horas = [], sueldos = [];
-            document.querySelectorAll('.bpHorasInput').forEach(input => { horas[parseInt(input.dataset.idx)] = parseInt(input.value) || 0; });
-            document.querySelectorAll('.bpSueldoInput').forEach(input => { sueldos[parseInt(input.dataset.idx)] = parseInt(input.value) || 0; });
-            if (sueldos.some(s => s === 0)) { showToast('Todos los sueldos deben ser mayores a 0', 'error'); return; }
-            if (currentEditBpId) {
-                const bp = state.bps.find(b => b.id === currentEditBpId);
-                if (bp) { bp.nombre = nombre; bp.seniority = document.getElementById('editBpSeniority').value; bp.horas = horas; bp.sueldos = sueldos; bp.activo = document.getElementById('editBpEstado').value === 'true'; await saveBP(bp); showToast('Brand Partner actualizado', 'success'); }
-            } else {
-                const newId = `BP${String(state.nextBpId).padStart(3, '0')}`;
-                const newBp = { id: newId, nombre, seniority: document.getElementById('editBpSeniority').value, sueldos, horas, activo: true };
-                await saveBP(newBp); state.nextBpId++; await saveConfig(); showToast('Brand Partner creado', 'success');
-            }
-            closeModal('editBpModal');
-        });
-
-        document.getElementById('btnPropagateBpHoras').addEventListener('click', (e) => {
-            e.preventDefault();
-            const val = prompt('Ingresar valor base para horas contratadas:');
-            if (val !== null && val !== '') { const num = parseInt(val); if (!isNaN(num) && num > 0) { document.querySelectorAll('.bpHorasInput').forEach(input => input.value = num); } else { showToast('Ingresa un número válido', 'error'); } }
-        });
-
-        document.getElementById('btnPropagateBpSueldo').addEventListener('click', (e) => {
-            e.preventDefault();
-            const val = prompt('Ingresar valor base para sueldo:');
-            if (val !== null && val !== '') { const num = parseInt(val); if (!isNaN(num) && num > 0) { document.querySelectorAll('.bpSueldoInput').forEach(input => input.value = num); } else { showToast('Ingresa un número válido', 'error'); } }
-        });
-
-        document.getElementById('btnAddBp').addEventListener('click', () => saveBPForm());
-
-        // ── Proyectos Section ──
-        function renderProyectos() {
-            const container = document.getElementById('proyectosTableContainer');
-            if (!state.proyectos || state.proyectos.length === 0) { container.innerHTML = '<p class="text-center text-muted">No hay proyectos. Crea uno para comenzar.</p>'; return; }
-            let html = '<table><thead><tr><th>Nombre</th><th>Tipo</th>'; for (let i = 0; i < 12; i++) { html += `<th>${MONTH_SHORT[i]}</th>`; } html += '<th>Estado</th><th>Acciones</th></tr></thead><tbody>';
-            for (const proy of state.proyectos) {
-                const anual = valorAnio(proy);
-                html += `<tr><td>${proy.nombre}</td><td><span class="badge ${tipoClass(proy.tipo)}">${proy.tipo}</span></td>`;
-                for (let i = 0; i < 12; i++) { html += `<td class="text-mono">${formatCurrency(valorMes(proy, i))}</td>`; }
-                html += `<td><span class="badge ${proy.estado === 'Activo' ? 'badge-green' : 'badge-amber'}">${proy.estado}</span></td><td class="action-buttons"><button class="btn-secondary btn-sm" onclick="editProyecto('${proy.id}')">Editar</button><button class="btn-danger btn-sm" onclick="confirmDeleteProyecto('${proy.id}')">Eliminar</button></td></tr>`;
-                html += `<tr class="sub-row"><td colspan="2">Anual Total</td>`; for (let i = 0; i < 12; i++) { html += '<td></td>'; } html += `<td colspan="2" class="cost-positive text-mono">${formatCurrency(anual)}</td></tr>`;
-            }
-            html += '</tbody></table>';
-            container.innerHTML = html;
-        }
-
-        function editProyecto(id) {
-            currentEditProyId = id;
-            const proy = state.proyectos.find(p => p.id === id);
-            if (!proy) return;
-            document.getElementById('editProyTitle').textContent = `Editar: ${proy.nombre}`;
-            document.getElementById('editProyName').value = proy.nombre;
-            document.getElementById('editProyEstado').value = proy.estado;
-            const categorias = getCategorias();
-            const select = document.getElementById('editProyTipo');
-            select.innerHTML = '';
-            for (const cat of categorias) { const option = document.createElement('option'); option.value = cat; option.textContent = cat; select.appendChild(option); }
-            select.value = proy.tipo;
-            const vGrid1 = document.getElementById('proyValorGrid'), vGrid2 = document.getElementById('proyValorGrid2');
-            vGrid1.innerHTML = ''; vGrid2.innerHTML = '';
-            for (let i = 0; i < 6; i++) { vGrid1.innerHTML += `<input type="number" class="proyValorInput" data-idx="${i}" value="${proy.valores[i] || 0}" min="0">`; }
-            for (let i = 6; i < 12; i++) { vGrid2.innerHTML += `<input type="number" class="proyValorInput" data-idx="${i}" value="${proy.valores[i] || 0}" min="0">`; }
-            openModal('editProyModal');
-        }
-
-        function saveProyectoForm() {
-            currentEditProyId = null;
-            document.getElementById('editProyTitle').textContent = 'Nuevo Proyecto';
-            document.getElementById('editProyForm').reset();
-            const categorias = getCategorias();
-            const select = document.getElementById('editProyTipo');
-            select.innerHTML = '';
-            for (const cat of categorias) { const option = document.createElement('option'); option.value = cat; option.textContent = cat; select.appendChild(option); }
-            const vGrid1 = document.getElementById('proyValorGrid'), vGrid2 = document.getElementById('proyValorGrid2');
-            vGrid1.innerHTML = ''; vGrid2.innerHTML = '';
-            for (let i = 0; i < 6; i++) { vGrid1.innerHTML += `<input type="number" class="proyValorInput" data-idx="${i}" value="0" min="0">`; }
-            for (let i = 6; i < 12; i++) { vGrid2.innerHTML += `<input type="number" class="proyValorInput" data-idx="${i}" value="0" min="0">`; }
-            openModal('editProyModal');
-        }
-
-        function confirmDeleteProyecto(id) {
-            if (confirm('¿Eliminar este proyecto?')) { deleteProyecto(id); showToast('Proyecto eliminado', 'success'); }
-        }
-
-        document.getElementById('editProyForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const nombre = document.getElementById('editProyName').value.trim();
-            const tipo = document.getElementById('editProyTipo').value;
-            if (!nombre) { showToast('El nombre es requerido', 'error'); return; }
-            if (!tipo) { showToast('Selecciona una categoría', 'error'); return; }
-            const valores = [];
-            document.querySelectorAll('.proyValorInput').forEach(input => { valores[parseInt(input.dataset.idx)] = parseInt(input.value) || 0; });
-            if (currentEditProyId) {
-                const proy = state.proyectos.find(p => p.id === currentEditProyId);
-                if (proy) { proy.nombre = nombre; proy.tipo = tipo; proy.valores = valores; proy.estado = document.getElementById('editProyEstado').value; await saveProyecto(proy); showToast('Proyecto actualizado', 'success'); }
-            } else {
-                const newId = `P${String(state.nextProyId).padStart(3, '0')}`;
-                const newProy = { id: newId, nombre, tipo, valores, estado: 'Activo' };
-                await saveProyecto(newProy); state.nextProyId++; await saveConfig(); showToast('Proyecto creado', 'success');
-            }
-            closeModal('editProyModal');
-        });
-
-        document.getElementById('btnNewCategoria').addEventListener('click', async (e) => {
-            e.preventDefault();
-            const newCat = prompt('Ingresa el nombre de la nueva categoría:');
-            if (newCat && newCat.trim()) {
-                const cat = newCat.trim();
-                if (!getCategorias().includes(cat)) {
-                    state.categorias.push(cat); await saveConfig();
-                    const select = document.getElementById('editProyTipo');
-                    const option = document.createElement('option');
-                    option.value = cat; option.textContent = cat;
-                    select.appendChild(option);
-                    select.value = cat;
-                    showToast(`Categoría "${cat}" creada`, 'success');
-                } else { showToast('esa categoría ya existe', 'error'); }
+            if (confirm('¿Confirmar logout?')) {
+                await logout();
             }
         });
 
-        document.getElementById('btnPropagateProyValor').addEventListener('click', (e) => {
-            e.preventDefault();
-            const val = prompt('Ingresar valor base para cotización:');
-            if (val !== null && val !== '') { const num = parseInt(val); if (!isNaN(num) && num > 0) { document.querySelectorAll('.proyValorInput').forEach(input => input.value = num); } else { showToast('Ingresa un número válido', 'error'); } }
+        // ── Tab Navigation ──
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const tabId = e.target.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                e.target.classList.add('active');
+            });
         });
 
-        document.getElementById('btnAddProy').addEventListener('click', () => saveProyectoForm());
+        // ── Nav Links ──
+        document.querySelectorAll('[data-page]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigate(e.target.dataset.page);
+            });
+        });
 
-        // ── Asignaciones Section ──
-        function renderAsignaciones() {
-            const container = document.getElementById('asignacionesContainer');
-            if (!state.asignaciones || !state.asignaciones[YEAR] || Object.keys(state.asignaciones[YEAR]).length === 0) { container.innerHTML = '<p class="text-center text-muted">No hay asignaciones. Crea una para comenzar.</p>'; return; }
-            let html = '<div class="card"><div class="table-wrapper"><table><thead><tr><th>Proyecto</th><th>Brand Partner</th>';
-            for (let i = 0; i < 12; i++) { html += `<th>${MONTH_SHORT[i]}</th>`; }
-            html += '<th>Total</th><th>Acciones</th></tr></thead><tbody>';
-            const asig = state.asignaciones[YEAR];
-            for (const [proyId, bps] of Object.entries(asig)) {
-                const proy = state.proyectos.find(p => p.id === proyId);
-                if (!proy) continue;
-                let first = true;
-                for (const [bpId, horas] of Object.entries(bps)) {
-                    const bp = state.bps.find(b => b.id === bpId);
-                    if (!bp) continue;
-                    let total = 0;
-                    html += `<tr>${first ? `<td rowspan="${Object.keys(bps).length}">${proy.nombre}</td>` : ''}<td>${bp.nombre}</td>`;
-                    for (let i = 0; i < 12; i++) {
-                        const h = horas[i] || 0;
-                        total += h;
-                        html += `<td><input type="number" class="inline-edit asigInput" data-proy="${proyId}" data-bp="${bpId}" data-mes="${i}" value="${h}" min="0" style="width: 60px;"></td>`;
-                    }
-                    html += `<td class="text-mono">${total}</td>${first ? `<td rowspan="${Object.keys(bps).length}"><button class="btn-danger btn-sm" onclick="confirmDeleteAsignacion('${proyId}')">Eliminar</button></td>` : ''}</tr>`;
-                    first = false;
+        // ── Auth State ──
+        function initApp() {
+            window.auth.onAuthStateChanged((user) => {
+                if (user) {
+                    currentUser = user;
+                    console.log('Usuario autenticado:', user.email);
+                    showAppPage();
+                } else {
+                    currentUser = null;
+                    showLoginPage();
                 }
-            }
-            html += '</tbody></table></div></div>';
-            container.innerHTML = html;
-            document.querySelectorAll('.asigInput').forEach(input => {
-                input.addEventListener('change', async (e) => {
-                    const proy = e.target.dataset.proy, bp = e.target.dataset.bp, mes = parseInt(e.target.dataset.mes), val = parseInt(e.target.value) || 0;
-                    const horas = [...(state.asignaciones[YEAR][proy][bp] || [])];
-                    horas[mes] = val;
-                    await saveAsignacion(proy, bp, horas);
-                });
             });
         }
 
-        function populateAsigSelects() {
-            const proySelect = document.getElementById('editAsigProy');
-            proySelect.innerHTML = '<option value="">Seleccionar proyecto...</option>';
-            for (const proy of (state.proyectos || [])) { const opt = document.createElement('option'); opt.value = proy.id; opt.textContent = proy.nombre; proySelect.appendChild(opt); }
-            const cbxContainer = document.getElementById('editAsigBpsCheckboxes');
-            cbxContainer.innerHTML = '';
-            for (const bp of (state.bps || [])) { const div = document.createElement('div'); div.className = 'checkbox-item'; div.innerHTML = `<input type="checkbox" id="cbx-${bp.id}" value="${bp.id}"><label for="cbx-${bp.id}">${bp.nombre}</label>`; cbxContainer.appendChild(div); }
-        }
-
-        function confirmDeleteAsignacion(proyId) {
-            if (confirm('¿Eliminar todas las asignaciones de este proyecto?')) {
-                const asig = state.asignaciones[YEAR][proyId];
-                for (const bpId of Object.keys(asig)) { deleteAsignacion(proyId, bpId); }
-                showToast('Asignaciones eliminadas', 'success');
-            }
-        }
-
-        document.getElementById('editAsigForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const proyId = document.getElementById('editAsigProy').value;
-            const selectedBps = Array.from(document.querySelectorAll('#editAsigBpsCheckboxes input:checked')).map(cb => cb.value);
-            if (!proyId) { showToast('Selecciona un proyecto', 'error'); return; }
-            if (selectedBps.length === 0) { showToast('Selecciona al menos un Brand Partner', 'error'); return; }
-            if (!state.asignaciones[YEAR]) state.asignaciones[YEAR] = {};
-            if (!state.asignaciones[YEAR][proyId]) state.asignaciones[YEAR][proyId] = {};
-            for (const bpId of selectedBps) {
-                if (!state.asignaciones[YEAR][proyId][bpId]) {
-                    const horas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                    await saveAsignacion(proyId, bpId, horas);
-                }
-            }
-            closeModal('editAsigModal');
-            showToast('Asignación agregada', 'success');
-        });
-
-        document.getElementById('btnAddAsig').addEventListener('click', () => { populateAsigSelects(); openModal('editAsigModal'); });
-
-        // ── Dashboard Section ──
-        function renderDashboard() { populateDashSelects(); }
-        function populateDashSelects() {
-            const bpSelect = document.getElementById('dashBpSelect');
-            bpSelect.innerHTML = '<option value="">Seleccionar BP...</option>';
-            for (const bp of (state.bps || []).filter(b => b.activo)) { const opt = document.createElement('option'); opt.value = bp.id; opt.textContent = bp.nombre; bpSelect.appendChild(opt); }
-            bpSelect.addEventListener('change', (e) => { if (e.target.value) renderDashBP(e.target.value); else document.getElementById('dashBpContent').innerHTML = ''; });
-            const proySelect = document.getElementById('dashProySelect');
-            proySelect.innerHTML = '<option value="">Seleccionar Proyecto...</option>';
-            for (const proy of (state.proyectos || []).filter(p => p.estado === 'Activo')) { const opt = document.createElement('option'); opt.value = proy.id; opt.textContent = proy.nombre; proySelect.appendChild(opt); }
-            proySelect.addEventListener('change', (e) => { if (e.target.value) renderDashProy(e.target.value); else document.getElementById('dashProyContent').innerHTML = ''; });
-        }
-
-        function renderDashBP(bpId) {
-            const bp = state.bps.find(b => b.id === bpId);
-            if (!bp) return;
-            let html = '';
-            const sueldoAnual = sueldoAnuoBP(bpId), utilizacion = utilizacionAnuoBP(bpId), hsOciosas = hsOciosaAnuoBP(bpId), costOcioso = costOciosaAnuoBP(bpId);
-            html += '<div class="kpi-strip">';
-            html += `<div class="kpi-card"><div class="kpi-label">Sueldo Anual</div><div class="kpi-value text-mono">${formatCurrency(sueldoAnual)}</div></div>`;
-            html += `<div class="kpi-card"><div class="kpi-label">Utilización Anual</div><div class="kpi-value">${utilizacion.toFixed(1)}%</div></div>`;
-            html += `<div class="kpi-card"><div class="kpi-label">Horas Ociosas</div><div class="kpi-value">${formatNumber(hsOciosas)}</div></div>`;
-            html += `<div class="kpi-card"><div class="kpi-label">Costo Ocioso</div><div class="kpi-value ${costOcioso > 0 ? 'cost-negative' : ''} text-mono">${formatCurrency(costOcioso)}</div></div>`;
-            html += '</div>';
-            html += '<h3 style="font-size: 18px; margin: 24px 0 16px 0;">Detalle Mensual</h3><div class="grid-cards">';
-            for (let m = 0; m < 12; m++) {
-                const hsAsig = hsAsignadasBP(bpId, m), hsContr = horasMes(bp, m), hsOcios = hsOciosasBP(bpId, m), sueldo = sueldoMes(bp, m), vh = valorHora(bp, m), lc = lcBPMes(bpId, m), util = hsContr > 0 ? (hsAsig / hsContr) * 100 : 0;
-                html += `<div class="detail-card"><div class="detail-card-month">${MONTHS[m]}</div><div class="detail-card-row"><span class="detail-card-label">Asignadas/Contratadas</span><span class="detail-card-value">${Math.round(hsAsig)}/${hsContr}</span></div><div class="detail-card-row"><span class="detail-card-label">Ociosas</span><span class="detail-card-value">${Math.round(hsOcios)}</span></div><div class="progress-bar"><div class="progress-fill" style="width: ${util}%"></div></div><div class="detail-card-row" style="margin-top: 12px;"><span class="detail-card-label">Sueldo</span><span class="detail-card-value text-mono">${formatCurrency(sueldo)}</span></div><div class="detail-card-row"><span class="detail-card-label">Valor Hora</span><span class="detail-card-value text-mono">${formatCurrency(vh)}</span></div><div class="detail-card-row"><span class="detail-card-label">Costo Ocioso</span><span class="detail-card-value ${lc > 0 ? 'cost-negative' : ''} text-mono">${formatCurrency(lc)}</span></div></div>`;
-            }
-            html += '</div>';
-            html += '<h3 style="font-size: 18px; margin: 32px 0 16px 0;">Proyectos Asignados</h3>';
-            const asig = state.asignaciones && state.asignaciones[YEAR];
-            const proysDelBp = [];
-            if (asig) {
-                for (const [proyId, bps] of Object.entries(asig)) {
-                    if (bps[bpId]) { const proy = state.proyectos.find(p => p.id === proyId); if (proy) { const hsTotal = bps[bpId].reduce((sum, h) => sum + h, 0); const costo = costoBPAnuoProy(bpId, proyId); proysDelBp.push({ proy, hsTotal, costo }); } }
-                }
-            }
-            if (proysDelBp.length === 0) { html += '<p class="text-center text-muted">No hay proyectos asignados</p>'; } else {
-                html += '<div class="card"><div class="table-wrapper"><table><thead><tr><th>Proyecto</th><th>Tipo</th><th>Horas Totales</th><th>Costo Aportado</th><th>% de Costo del Proyecto</th></tr></thead><tbody>';
-                for (const { proy, hsTotal, costo } of proysDelBp) {
-                    const costoProy = Object.entries(state.asignaciones[YEAR][proy.id] || {}).reduce((sum, [bid, hrs]) => sum + costoBPAnuoProy(bid, proy.id), 0);
-                    const pct = costoProy > 0 ? (costo / costoProy) * 100 : 0;
-                    html += `<tr><td>${proy.nombre}</td><td><span class="badge ${tipoClass(proy.tipo)}">${proy.tipo}</span></td><td class="text-mono">${hsTotal}</td><td class="text-mono">${formatCurrency(costo)}</td><td class="text-mono">${pct.toFixed(1)}%</td></tr>`;
-                }
-                html += '</tbody></table></div></div>';
-            }
-            document.getElementById('dashBpContent').innerHTML = html;
-        }
-
-        function renderDashProy(proyId) {
-            const proy = state.proyectos.find(p => p.id === proyId);
-            if (!proy) return;
-            let html = '';
-            const valorAnual = valorAnio(proy);
-            const asig = state.asignaciones && state.asignaciones[YEAR];
-            let costoBpsAnual = 0;
-            if (asig && asig[proyId]) { for (const bpId of Object.keys(asig[proyId])) { costoBpsAnual += costoBPAnuoProy(bpId, proyId); } }
-            const margenAnual = valorAnual - costoBpsAnual;
-            const margenPct = valorAnual > 0 ? (margenAnual / valorAnual) * 100 : 0;
-            html += '<div class="kpi-strip">';
-            html += `<div class="kpi-card"><div class="kpi-label">Tipo</div><div class="kpi-value"><span class="badge ${tipoClass(proy.tipo)}">${proy.tipo}</span></div></div>`;
-            html += `<div class="kpi-card"><div class="kpi-label">Valor Cotizado Anual</div><div class="kpi-value text-mono">${formatCurrency(valorAnual)}</div></div>`;
-            html += `<div class="kpi-card"><div class="kpi-label">Costo BPs Anual</div><div class="kpi-value text-mono">${formatCurrency(costoBpsAnual)}</div></div>`;
-            html += `<div class="kpi-card"><div class="kpi-label">Margen Anual</div><div class="kpi-value ${margenAnual >= 0 ? 'cost-positive' : 'cost-negative'} text-mono">${formatCurrency(margenAnual)}</div><div class="kpi-detail">${margenPct.toFixed(1)}%</div></div>`;
-            html += '</div>';
-            html += '<h3 style="font-size: 18px; margin: 24px 0 16px 0;">Horas Asignadas por Brand Partner</h3>';
-            if (!asig || !asig[proyId] || Object.keys(asig[proyId]).length === 0) { html += '<p class="text-center text-muted">No hay BPs asignados</p>'; } else {
-                html += '<div class="card"><div class="table-wrapper"><table><thead><tr><th>Brand Partner</th>';
-                for (let i = 0; i < 12; i++) { html += `<th>${MONTH_SHORT[i]}</th>`; }
-                html += '<th>Total</th></tr></thead><tbody>';
-                const bpsAsig = Object.keys(asig[proyId]);
-                for (const bpId of bpsAsig) {
-                    const bp = state.bps.find(b => b.id === bpId);
-                    if (!bp) continue;
-                    let total = 0;
-                    html += `<tr><td>${bp.nombre}</td>`;
-                    for (let m = 0; m < 12; m++) {
-                        const h = asig[proyId][bpId][m] || 0;
-                        total += h;
-                        html += `<td class="text-mono">${h}</td>`;
-                    }
-                    html += `<td class="text-mono">${total}</td></tr>`;
-                }
-                html += '<tr style="background-color: #1e2333;"><td><strong>Total Mes</strong></td>';
-                let totalAnual = 0;
-                for (let m = 0; m < 12; m++) {
-                    let totalMes = 0;
-                    for (const bpId of bpsAsig) { totalMes += asig[proyId][bpId][m] || 0; }
-                    totalAnual += totalMes;
-                    html += `<td class="text-mono"><strong>${totalMes}</strong></td>`;
-                }
-                html += `<td class="text-mono"><strong>${totalAnual}</strong></td></tr>`;
-                html += '</tbody></table></div></div>';
-            }
-            html += '<h3 style="font-size: 18px; margin: 24px 0 16px 0;">Rentabilidad Mensual</h3><div class="grid-cards">';
-            for (let m = 0; m < 12; m++) {
-                const valor = valorMes(proy, m);
-                let costo = 0;
-                if (asig && asig[proyId]) { for (const bpId of Object.keys(asig[proyId])) { const bp = state.bps.find(b => b.id === bpId); if (bp) { const hs = asig[proyId][bpId][m] || 0; const vh = valorHora(bp, m); costo += hs * vh; } } }
-                const margen = valor - costo;
-                const margenPctMes = valor > 0 ? (margen / valor) * 100 : 0;
-                html += `<div class="detail-card"><div class="detail-card-month">${MONTHS[m]}</div><div class="detail-card-row"><span class="detail-card-label">Valor</span><span class="detail-card-value text-mono">${formatCurrency(valor)}</span></div><div class="detail-card-row"><span class="detail-card-label">Costo BPs</span><span class="detail-card-value text-mono">${formatCurrency(costo)}</span></div><div class="detail-card-row" style="margin-top: 12px;"><span class="detail-card-label">Margen</span><span class="detail-card-value ${margen >= 0 ? 'cost-positive' : 'cost-negative'} text-mono">${formatCurrency(margen)}</span></div><div style="text-align: center; margin-top: 12px;"><div class="margin-percentage ${margenPctMes < 0 ? 'negative' : ''}">${margenPctMes.toFixed(0)}%</div></div></div>`;
-            }
-            html += '</div>';
-            document.getElementById('dashProyContent').innerHTML = html;
-        }
-
-        // ── Tab Navigation ──
-        document.querySelectorAll('.tab-btn').forEach(btn => { btn.addEventListener('click', (e) => { const tabId = e.target.dataset.tab; document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.getElementById(tabId).classList.add('active'); e.target.classList.add('active'); }); });
-
-        // ── Modal Controls ──
-        document.querySelectorAll('[data-close]').forEach(btn => { btn.addEventListener('click', (e) => { closeModal(e.target.dataset.close); }); });
-        document.querySelectorAll('.modal-overlay').forEach(overlay => { overlay.addEventListener('click', (e) => { if (e.target === overlay) { closeModal(overlay.id); } }); });
-
-        // ── Navigation Links ──
-        document.querySelectorAll('[data-page]').forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); navigate(e.target.dataset.page); }); });
-
-        // ── Auth State Listener ──
-        auth.onAuthStateChanged((user) => { if (user) { currentUser = user; subscribeToUserData(user.uid); showAppPage(); } else { currentUser = null; showLoginPage(); } });
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', initFirebase);
     </script>
 </body>
 </html>
