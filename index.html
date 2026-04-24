@@ -150,8 +150,12 @@
             to { transform: rotate(360deg); }
         }
 
-        #appContainer {
+        #appContainer.hidden {
             display: none;
+        }
+
+        #appContainer {
+            display: block;
         }
 
         .container {
@@ -932,12 +936,43 @@
         }
 
         function showAppPage() {
-            console.log('Mostrando app...');
-            document.getElementById('loginContainer').classList.add('hidden');
-            document.getElementById('appContainer').classList.remove('hidden');
-            document.getElementById('logoutEmail').textContent = currentUser.email;
+            console.log('showAppPage() - Mostrando app...');
+            console.log('loginContainer:', document.getElementById('loginContainer'));
+            console.log('appContainer:', document.getElementById('appContainer'));
+
+            const loginCon = document.getElementById('loginContainer');
+            const appCon = document.getElementById('appContainer');
+
+            if (loginCon) {
+                loginCon.classList.add('hidden');
+                console.log('✓ loginContainer oculto');
+            } else {
+                console.error('✗ loginContainer NO encontrado');
+            }
+
+            if (appCon) {
+                appCon.classList.remove('hidden');
+                console.log('✓ appContainer mostrado. display:', window.getComputedStyle(appCon).display);
+            } else {
+                console.error('✗ appContainer NO encontrado');
+            }
+
+            const emailDiv = document.getElementById('logoutEmail');
+            if (emailDiv && currentUser) {
+                emailDiv.textContent = currentUser.email;
+                console.log('✓ Email mostrado:', currentUser.email);
+            }
+
+            console.log('Llamando a subscribeToUserData...');
             subscribeToUserData(currentUser.uid);
+
+            console.log('Llamando a navigate("dashboard")...');
             navigate('dashboard');
+
+            const dashboard = document.getElementById('dashboard');
+            if (dashboard) {
+                console.log('✓ dashboard encontrado. display:', window.getComputedStyle(dashboard).display);
+            }
         }
 
         function openModal(modalId) {
@@ -1029,7 +1064,7 @@
 
         // ── Firestore Listeners ──
         function subscribeToUserData(uid) {
-            console.log('Suscribiendo a datos de usuario:', uid);
+            console.log('📡 subscribeToUserData() - uid:', uid);
             try {
                 // BPs
                 const unsub1 = window.db.collection('users').doc(uid).collection('bps').onSnapshot(snap => {
@@ -1037,8 +1072,9 @@
                     snap.forEach(doc => {
                         state.bps.push(doc.data());
                     });
-                    console.log('BPs cargados:', state.bps.length);
-                }, err => console.error('Error cargando BPs:', err));
+                    console.log('✓ BPs cargados desde Firestore:', state.bps.length, state.bps);
+                    setTimeout(() => renderDashboard(), 100);
+                }, err => console.error('✗ Error cargando BPs:', err));
                 unsubscribers.push(unsub1);
 
                 // Proyectos
@@ -1047,36 +1083,54 @@
                     snap.forEach(doc => {
                         state.proyectos.push(doc.data());
                     });
-                    console.log('Proyectos cargados:', state.proyectos.length);
-                    renderDashboard();
-                }, err => console.error('Error cargando Proyectos:', err));
+                    console.log('✓ Proyectos cargados desde Firestore:', state.proyectos.length, state.proyectos);
+                    setTimeout(() => renderDashboard(), 100);
+                }, err => console.error('✗ Error cargando Proyectos:', err));
                 unsubscribers.push(unsub2);
 
                 // Config
                 const unsub3 = window.db.collection('users').doc(uid).collection('config').doc('main').onSnapshot(doc => {
                     if (doc.exists) {
                         state.categorias = doc.data().categorias || [];
-                        console.log('Config cargada');
+                        console.log('✓ Config cargada:', state.categorias);
                     }
-                }, err => console.error('Error cargando Config:', err));
+                }, err => console.error('✗ Error cargando Config:', err));
                 unsubscribers.push(unsub3);
+
+                console.log('✓ Todos los listeners suscriptos');
             } catch (error) {
-                console.error('Error en subscribeToUserData:', error);
+                console.error('✗ Error en subscribeToUserData:', error);
             }
         }
 
         // ── Dashboard Render ──
         function renderDashboard() {
-            console.log('Renderizando dashboard. BPs:', state.bps?.length, 'Proyectos:', state.proyectos?.length);
+            console.log('🔄 renderDashboard() ejecutada');
+            console.log('State:', { bps: state.bps?.length, proyectos: state.proyectos?.length });
+
             const content = document.getElementById('dashBpContent');
+            console.log('Elemento dashBpContent:', content);
+
             if (!content) {
-                console.warn('Elemento dashBpContent no encontrado');
+                console.error('✗ dashBpContent NO ENCONTRADO. Verificar HTML.');
+                // Crear el elemento si no existe para debugging
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent) {
+                    const dummy = document.createElement('div');
+                    dummy.id = 'dashBpContent';
+                    mainContent.appendChild(dummy);
+                    console.log('⚠️ Creado dashBpContent dinámicamente');
+                }
                 return;
             }
 
+            console.log('✓ dashBpContent encontrado');
+
             // Estado inicial de carga
             if (!state.bps || !state.proyectos) {
-                content.innerHTML = '<div class="card"><p class="text-center text-muted">Cargando datos de Firestore...</p></div>';
+                const loadingHtml = '<div class="card"><p class="text-center text-muted">⏳ Cargando datos de Firestore...</p></div>';
+                content.innerHTML = loadingHtml;
+                console.log('Estado de carga mostrado');
                 return;
             }
 
@@ -1109,6 +1163,7 @@
             }
 
             content.innerHTML = html;
+            console.log('✓ Dashboard renderizado completamente');
         }
 
         // ── Tab Navigation ──
