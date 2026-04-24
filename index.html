@@ -932,9 +932,11 @@
         }
 
         function showAppPage() {
+            console.log('Mostrando app...');
             document.getElementById('loginContainer').classList.add('hidden');
             document.getElementById('appContainer').classList.remove('hidden');
             document.getElementById('logoutEmail').textContent = currentUser.email;
+            subscribeToUserData(currentUser.uid);
             navigate('dashboard');
         }
 
@@ -1024,6 +1026,90 @@
                 await logout();
             }
         });
+
+        // ── Firestore Listeners ──
+        function subscribeToUserData(uid) {
+            console.log('Suscribiendo a datos de usuario:', uid);
+            try {
+                // BPs
+                const unsub1 = window.db.collection('users').doc(uid).collection('bps').onSnapshot(snap => {
+                    state.bps = [];
+                    snap.forEach(doc => {
+                        state.bps.push(doc.data());
+                    });
+                    console.log('BPs cargados:', state.bps.length);
+                }, err => console.error('Error cargando BPs:', err));
+                unsubscribers.push(unsub1);
+
+                // Proyectos
+                const unsub2 = window.db.collection('users').doc(uid).collection('proyectos').onSnapshot(snap => {
+                    state.proyectos = [];
+                    snap.forEach(doc => {
+                        state.proyectos.push(doc.data());
+                    });
+                    console.log('Proyectos cargados:', state.proyectos.length);
+                    renderDashboard();
+                }, err => console.error('Error cargando Proyectos:', err));
+                unsubscribers.push(unsub2);
+
+                // Config
+                const unsub3 = window.db.collection('users').doc(uid).collection('config').doc('main').onSnapshot(doc => {
+                    if (doc.exists) {
+                        state.categorias = doc.data().categorias || [];
+                        console.log('Config cargada');
+                    }
+                }, err => console.error('Error cargando Config:', err));
+                unsubscribers.push(unsub3);
+            } catch (error) {
+                console.error('Error en subscribeToUserData:', error);
+            }
+        }
+
+        // ── Dashboard Render ──
+        function renderDashboard() {
+            console.log('Renderizando dashboard. BPs:', state.bps?.length, 'Proyectos:', state.proyectos?.length);
+            const content = document.getElementById('dashBpContent');
+            if (!content) {
+                console.warn('Elemento dashBpContent no encontrado');
+                return;
+            }
+
+            // Estado inicial de carga
+            if (!state.bps || !state.proyectos) {
+                content.innerHTML = '<div class="card"><p class="text-center text-muted">Cargando datos de Firestore...</p></div>';
+                return;
+            }
+
+            let html = '';
+
+            // BPs
+            if (state.bps.length > 0) {
+                html += '<div class="card">';
+                html += '<h2 style="color: #5b95ff; margin-bottom: 16px;">Brand Partners (' + state.bps.length + ')</h2>';
+                html += '<ul style="color: #a8b1c7; list-style-position: inside;">';
+                for (const bp of state.bps) {
+                    html += '<li style="margin-bottom: 8px;">' + bp.nombre + ' <span style="color: #5b95ff;">(' + bp.seniority + ')</span></li>';
+                }
+                html += '</ul></div>';
+            } else {
+                html += '<div class="card"><p class="text-center text-muted">No hay Brand Partners</p></div>';
+            }
+
+            // Proyectos
+            if (state.proyectos.length > 0) {
+                html += '<div class="card">';
+                html += '<h2 style="color: #5b95ff; margin-bottom: 16px;">Proyectos (' + state.proyectos.length + ')</h2>';
+                html += '<ul style="color: #a8b1c7; list-style-position: inside;">';
+                for (const proy of state.proyectos) {
+                    html += '<li style="margin-bottom: 8px;">' + proy.nombre + ' <span style="color: #fbbf24;">(' + proy.tipo + ')</span></li>';
+                }
+                html += '</ul></div>';
+            } else {
+                html += '<div class="card"><p class="text-center text-muted">No hay Proyectos</p></div>';
+            }
+
+            content.innerHTML = html;
+        }
 
         // ── Tab Navigation ──
         document.querySelectorAll('.tab-btn').forEach(btn => {
